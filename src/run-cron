@@ -11,7 +11,7 @@ cron_time=$(get_env "CRON_TIME" "$cron_minute $cron_hour * * *")
 test_env=$(get_env "TEST_ENV" false)
 
 backup_log_file="/var/log/backup.log"
-if [ ! -f $FILE ]; then
+if [ ! -f "$backup_log_file" ]; then
     touch $backup_log_file
 fi
 
