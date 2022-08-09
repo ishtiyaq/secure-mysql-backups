@@ -44,9 +44,7 @@ jobs:
 
     deploy:
         name: Deploy
-
         needs: [build]
-
         runs-on: ubuntu-20.04
 
         steps:
