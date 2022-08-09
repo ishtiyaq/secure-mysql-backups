@@ -3,17 +3,14 @@ name: Build and deploy
 on:
     push:
         tags:
-            - '**'
+        - '**'
 
 jobs:
     build:
         name: Build
-
         runs-on: ubuntu-20.04
-
         steps:
             -   uses: actions/checkout@v2
-
             -   uses: FranzDiebold/github-env-vars-action@v2
 
             -   name: Set major tag name
@@ -25,19 +22,19 @@ jobs:
             -   name: Build image
                 run: |
                     docker build --no-cache \
-                        -t williarin/secure-mysql-backups:latest \
-                        -t williarin/secure-mysql-backups:$CI_REF_NAME \
-                        -t williarin/secure-mysql-backups:${{ env.TAG_MAJOR }} \
-                        -t williarin/secure-mysql-backups:${{ env.TAG_MINOR }} \
+                        -t ishtiyaq/secure-mysql-backups:latest \
+                        -t ishtiyaq/secure-mysql-backups:$CI_REF_NAME \
+                        -t ishtiyaq/secure-mysql-backups:${{ env.TAG_MAJOR }} \
+                        -t ishtiyaq/secure-mysql-backups:${{ env.TAG_MINOR }} \
                         --target base .
 
             -   name: Save Docker image as artifact
                 run: |
                     docker save -o /tmp/image.tar \
-                        williarin/secure-mysql-backups:latest \
-                        williarin/secure-mysql-backups:$CI_REF_NAME \
-                        williarin/secure-mysql-backups:${{ env.TAG_MAJOR }} \
-                        williarin/secure-mysql-backups:${{ env.TAG_MINOR }}
+                        ishtiyaq/secure-mysql-backups:latest \
+                        ishtiyaq/secure-mysql-backups:$CI_REF_NAME \
+                        ishtiyaq/secure-mysql-backups:${{ env.TAG_MAJOR }} \
+                        ishtiyaq/secure-mysql-backups:${{ env.TAG_MINOR }}
 
             -   name: Upload artifact
                 uses: actions/upload-artifact@v2
@@ -75,4 +72,4 @@ jobs:
             -   name: Push Docker image
                 run: |
                     echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-                    docker push --all-tags williarin/secure-mysql-backups
+                    docker push --all-tags ishtiyaq/secure-mysql-backups
