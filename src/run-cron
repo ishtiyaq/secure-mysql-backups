@@ -10,10 +10,15 @@ cron_hour=$(get_env "CRON_HOUR" "0")
 cron_time=$(get_env "CRON_TIME" "$cron_minute $cron_hour * * *")
 test_env=$(get_env "TEST_ENV" false)
 
-echo "$cron_time backup >> /var/log/backup.log" > /etc/crontabs/root
+backup_log_file="/var/log/backup.log"
+if [ ! -f $FILE ]; then
+    touch $backup_log_file
+fi
+
+echo "$cron_time backup >> $backup_log_file" > /etc/crontabs/root
 
 if [ "$test_env" = false ]; then
     echo "Launching cron service..."
-    tail -F /var/log/backup.log &
+    tail -F $backup_log_file &
     exec crond -f -L /var/log/cron.log
 fi
