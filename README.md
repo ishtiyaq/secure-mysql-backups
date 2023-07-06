@@ -42,7 +42,7 @@ docker run -d \
     -e CHOWN_FILES='1000:1000' \
     -e MAX_CPU=4 \
     -v /path/to/backups:/backup \
-    williarin/secure-mysql-backups:1
+    ishtiyaq/secure-mysql-backups:1
 ```
 
 ## Variables
@@ -82,7 +82,7 @@ docker run --rm \
     -e CHOWN_FILES='1000:1000' \
     -e MAX_CPU=4 \
     -v /path/to/backups:/backup \
-    williarin/secure-mysql-backups:1 \
+    ishtiyaq/secure-mysql-backups:1 \
     backup
 ```
 
@@ -100,7 +100,7 @@ docker run --rm \
     -e AES_PASSPHRASE=my_passphrase \
     -e CHOWN_FILES='1000:1000' \
     -v /path/to/backups:/backup \
-    williarin/secure-mysql-backups:1 \
+    ishtiyaq/secure-mysql-backups:1 \
     decrypt main-backup.day3-Wednesday.tgz.aes
 ```
 
@@ -121,7 +121,7 @@ services:
             - MYSQL_ROOT_PASSWORD=root
 
     backup:
-        image: williarin/secure-mysql-backups:1
+        image: ishtiyaq/secure-mysql-backups:1
         restart: 'no'
         volumes:
             - ./backup:/backup
